@@ -1,5 +1,5 @@
 /**
-
+b1
 public class Main {
     public static void main(String[] args) {
         HinhTron ht1 = new HinhTron(1, 1, 3.5);
@@ -22,6 +22,8 @@ public class Main {
 }
 */
 
+/** 
+ * bai2
 package buoi3;
 import java.util.ArrayList;
 public class Main {
@@ -81,5 +83,59 @@ public class Main {
         System.out.println("\nPhan so lon nhat: " + timMax(ds));
         System.out.println("Tong cac phan so: " + tinhTong(ds));
         System.out.println("So phan so khong phai so nguyen: " + demKhongNguyen(ds));
+    }
+}
+*/
+package buoi3;
+import java.util.ArrayList;
+
+
+
+public class Main {
+    public static void main(String[] args) {
+        // Tạo danh sách điểm gồm cả 2D và 3D
+        ArrayList<Diem2D> ds = new ArrayList<>();
+        ds.add(new Diem2D(1, 2));
+        ds.add(new Diem2D(4, 6));
+        ds.add(new Diem2D(0, 0));
+        ds.add(new Diem3D(1, 2, 3));
+        ds.add(new Diem3D(4, 6, 3));
+        ds.add(new Diem3D(0, 0, 0));
+
+        // Tính tổng khoảng cách giữa các điểm liên tiếp
+        double tong2D = 0;
+        double tong3D = 0;
+        Diem2D truoc2D = null;
+        Diem3D truoc3D = null;
+
+        for (int i = 0; i < ds.size(); i++) {
+            Diem2D p = ds.get(i);
+            if (p instanceof Diem3D) {
+                Diem3D q = (Diem3D) p;
+                if (truoc3D != null) {
+                    tong3D = tong3D + truoc3D.khoangCach(q);
+                }
+                truoc3D = q;
+            } else {
+                if (truoc2D != null) {
+                    tong2D = tong2D + truoc2D.khoangCach(p);
+                }
+                truoc2D = p;
+            }
+        }
+        System.out.printf("Tong khoang cach cac diem 2D: %.2f\n", tong2D);
+        System.out.printf("Tong khoang cach cac diem 3D: %.2f\n", tong3D);
+
+        // Đưa các điểm đối xứng vào danh sách
+        int n = ds.size();
+        for (int i = 0; i < n; i++) {
+            ds.add(ds.get(i).doiXung());
+        }
+
+        // Hiển thị danh sách
+        System.out.println("\nDanh sach cac diem:");
+        for (int i = 0; i < ds.size(); i++) {
+            System.out.println(ds.get(i));
+        }
     }
 }
